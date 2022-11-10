@@ -1,0 +1,42 @@
+node 
+{
+
+ def mavenhome = tool name: "maven3.8.4" 
+ 
+ stage('CheckoutCode')
+ {
+    git branch: 'development', credentialsId: 'ee92b6d4-9f69-4d40-a2e3-b408a7e13442', url: 'https://github.com/mss-social-app/maven-web-application-1.git'
+
+ }
+
+ stage ('Build')
+ {
+   sh "${mavenhome}/bin/mvn clean package"
+ }
+
+ stage ('Executesonarqubereport')
+  {
+       sh "${mavenhome}/bin/mvn clean sonar:sonar "
+  }
+
+ stage ('UploadArtifactIntoNexus')
+  {
+       sh "${mavenhome}/bin/mvn clean deploy "
+  }
+
+ stage ('Deploye')
+  {
+      deploy adapters: [tomcat9(credentialsId: '3f75ffd9-ee98-4c5f-b776-f7e35eaf9a5a', path: '', url: 'http://192.168.137.209:9987/')], contextPath: null, war: '**/maven-web-application.war'
+  }
+
+ stage ('stand notification')
+ {
+   emailext body: '''Build over
+
+    number 9987341848
+    regard akash yadav''', subject: 'build over', to: 'yadav.akash6969@gmail.com'
+ }
+
+
+
+}
