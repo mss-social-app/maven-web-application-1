@@ -30,8 +30,8 @@ options {
 	//Get the code from git hub 
     stage('checkoutclose'){
 	steps {
-	git branch: 'development', credentialsId: 'ee92b6d4-9f69-4d40-a2e3-b408a7e13442', url: 'https://github.com/mss-social-app/maven-web-application-1.git'		
-	}		
+git branch: 'development', credentialsId: 'ee92b6d4-9f69-4d40-a2e3-b408a7e13442', url: 'https://github.com/mss-social-app/maven-web-application-1.git'
+}		
 	}
     //Build the tools 
 	stage ('build'){
