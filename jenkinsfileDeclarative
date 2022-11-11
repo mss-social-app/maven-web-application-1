@@ -47,7 +47,7 @@ options {
 	}
 	
     //upload artifacts into nexus server 
-	stage ('Artifacts into nexus){
+	stage ('Artifacts into nexus'){
 	steps {
 	sh "mvn clean deploy"		
 	}	
