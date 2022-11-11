@@ -22,8 +22,8 @@ options{
    stage('CheckoutCode')
    {
      steps{
-git branch: ' development', credentialsId: 'ee92b6d4-9f69-4d40-a2e3-b408a7e13442', url: 'https://github.com/mss-social-app/maven-web-application-1.git'
-}
+       git branch: 'development', credentialsId: 'ee92b6d4-9f69-4d40-a2e3-b408a7e13442', url: 'https://github.com/mss-social-app/maven-web-application-1.git'
+	 }
    }
    
    stage('Build')
@@ -49,11 +49,9 @@ git branch: ' development', credentialsId: 'ee92b6d4-9f69-4d40-a2e3-b408a7e13442
    
   stage('DeployAppIntoTomcat')
  {
-   steps{
-  sshagent(['2b7b0c6a-5eff-4f4a-82c3-3630f91c70b5']) {
-  sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@3.1.222.74:/opt/apache-tomcat-9.0.41/webapps/"
-  }
- }
+   steps {
+	 deploy adapters: [tomcat9(credentialsId: '3f75ffd9-ee98-4c5f-b776-f7e35eaf9a5a', path: '', url: 'http://192.168.137.209:9987/')], contextPath: null, war: '**/maven-web-application.war'		
+	}	
  }
  
   
