@@ -46,14 +46,14 @@ options{
 	  sh "mvn deploy"
 	 }
    }
-   
+   /*
   stage('DeployAppIntoTomcat')
  {
    steps {
 	 deploy adapters: [tomcat9(credentialsId: '3f75ffd9-ee98-4c5f-b776-f7e35eaf9a5a', path: '', url: 'http://192.168.137.209:9987/')], contextPath: null, war: '**/maven-web-application.war'		
 	}	
  }
- 
+ */
   
  
  }
