@@ -5,14 +5,11 @@ pipeline{
  maven 'maven3.8.4'
  
  }
- ------>triggers
+
  triggers {
   pollSCM '* * * * *'
 }
-Build periodically ----trigger
-triggers {
-  cron '* * * * *'
-}
+
 options {
 	// add timestamp console output
   timestamps()
