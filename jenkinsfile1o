@@ -61,6 +61,4 @@ def notifyBuild(String buildStatus = 'STARTED') {
     regard akash yadav''', subject: 'build over', to: 'yadav.akash6969@gmail.com'
  }
 notifyBuild(currentBuild.result)
-
-
 }
