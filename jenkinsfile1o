@@ -1,8 +1,39 @@
 node 
 {
+try {
+        notifyBuild('STARTED')
+
+        stage('Prepare code') {
+            echo 'do checkout stuff'
+        }
+
+        stage('Testing') {
+            echo 'Testing'
+            echo 'Testing - publish coverage results'
+        }
+
+        stage('Staging') {
+            echo 'Deploy Stage'
+        }
+
+        stage('Deploy') {
+            echo 'Deploy - Backend'
+            echo 'Deploy - Frontend'
+        }
+
+  } catch (e) {
+    // If there was an exception thrown, the build failed
+    currentBuild.result = "FAILED"
+    throw e
+  } finally {
+    // Success or failure, always send notifications
+    notifyBuild(currentBuild.result)
+  }
+}
+
 def notifyBuild(String buildStatus = 'STARTED') {
   // build status of null means successful
-  buildStatus =  buildStatus ?: 'SUCCESS'
+  buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
   // Default values
   def colorName = 'RED'
@@ -14,7 +45,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
   if (buildStatus == 'STARTED') {
     color = 'YELLOW'
     colorCode = '#FFFF00'
-  } else if (buildStatus == 'SUCCESS') {
+  } else if (buildStatus == 'SUCCESSFUL') {
     color = 'GREEN'
     colorCode = '#00FF00'
   } else {
@@ -22,7 +53,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
     colorCode = '#FF0000'
   }
 
-// Send notifications
+  // Send notifications
   slackSend (color: colorCode, message: summary)
 }
 
